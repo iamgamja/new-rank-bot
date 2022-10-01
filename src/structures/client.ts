@@ -10,7 +10,7 @@ export class Client extends CommandClient {
       }),
       owners: 'auto',
       command: {
-        prefix: '!!',
+        prefix: '',
       },
       applicationCommands: {
         autoSync: true,
