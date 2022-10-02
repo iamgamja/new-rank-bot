@@ -21,7 +21,7 @@ jobs:
           cmd: build # will run `yarn build` command
 
       - name: Copy Procfile to ./dist
-        run: cp Procfile ./dist/Procfile
+        run: cp ./Procfile ./dist/Procfile
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
