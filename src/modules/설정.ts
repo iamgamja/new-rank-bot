@@ -35,11 +35,9 @@ class 설정 extends Module {
     const roles = i.member?.roles
     let isAdmin: boolean = false
     if (roles instanceof GuildMemberRoleManager) {
-      // isAdmin = !!roles.cache.get('953309071468007494') // 관리자
-      isAdmin = !!roles.cache.get('1026012660971610142') // 흐헤헤
+      isAdmin = !!roles.cache.get('953309071468007494') // 관리자
     } else if (roles) {
-      // isAdmin = roles.includes('953309071468007494') // 관리자
-      isAdmin = roles.includes('1026012660971610142') // 흐헤헤
+      isAdmin = roles.includes('953309071468007494') // 관리자
     }
     if (!isAdmin) {
       await i.reply({ content: '관리자만 사용할 수 있습니다.', ephemeral: true })
