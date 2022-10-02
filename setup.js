@@ -9,4 +9,4 @@ const data = `{
 }
 `
 
-fs.writeFileSync('./config.json', data)
+fs.writeFileSync('./dist/config.json', data)
