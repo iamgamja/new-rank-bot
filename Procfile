@@ -1,1 +1,1 @@
-worker: node ./src/setup.js && node ./src/index.js
+worker: node ./dist/src/setup.js && node ./dist/src/index.js
