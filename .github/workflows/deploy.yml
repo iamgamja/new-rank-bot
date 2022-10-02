@@ -20,11 +20,17 @@ jobs:
         with:
           cmd: build # will run `yarn build` command
 
-      - name: copy file
+      - name: Copy Procfile
         uses: canastro/copy-file-action@master
         with:
           source: "Procfile"
           target: "./dist/Procfile"
+
+      - name: Copy package.json
+        uses: canastro/copy-file-action@master
+        with:
+          source: "package.json"
+          target: "./dist/package.json"
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
