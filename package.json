@@ -18,6 +18,5 @@
     "dev": "ts-node src",
     "build": "tsc",
     "prod": "node dist"
-  },
-  "type": "module"
+  }
 }

@@ -1,5 +1,5 @@
 const token = process.env.TOKEN
-import fs from 'fs'
+const fs = require('fs');
 
 const data = `{
   "token": "${token}",
