@@ -20,8 +20,11 @@ jobs:
         with:
           cmd: build # will run `yarn build` command
 
-      - name: Copy Procfile to ./dist
-        run: cp ./Procfile ./dist/Procfile
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "Procfile"
+          target: "./dist/Procfile"
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
