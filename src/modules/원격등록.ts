@@ -4,7 +4,7 @@ import { CommandInteraction, GuildMember, TextChannel, GuildMemberRoleManager } 
 import { DBData } from '../../types/DBData'
 import Data_Tears from '../data/tears'
 
-class 등록 extends Module {
+class 원격등록 extends Module {
   constructor(private cts: Client) {
     super()
   }
