@@ -24,8 +24,17 @@ class Eval extends Module {
     },
   })
   async eval_(i: CommandInteraction, @option('식') 식: string) {
+    if (i.member!.id !== '526889025894875158') return
+
     const db = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
-    await db.edit('{}')
+
+    try {
+      const result: any = eval(식)
+      await i.reply({content: result.toString(), ephemeral: true })
+    } catch {
+
+    }
+
   }
 }
 
