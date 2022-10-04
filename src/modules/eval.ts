@@ -1,4 +1,4 @@
-import { Module, applicationCommand } from '@pikokr/command.ts'
+import { Module, applicationCommand, option } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
 import { CommandInteraction, TextChannel } from 'discord.js'
 import { DBData } from '../../types/DBData'
@@ -13,10 +13,19 @@ class Eval extends Module {
       type: 'CHAT_INPUT',
       name: 'eval',
       description: 'eval',
+      options: [
+        {
+          name: "식",
+          description: '식',
+          required: true,
+          type: 'STRING',
+        }
+      ]
     },
   })
-  async eval_(i: CommandInteraction) {
-    // Code
+  async eval_(i: CommandInteraction, @option('식') 식: string) {
+    const db = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
+    await db.edit('{}')
   }
 }
 
