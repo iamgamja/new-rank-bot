@@ -9,7 +9,7 @@ class Ready extends Module {
   }
 
   @listener('ready')
-  ready() {
+  async ready() {
     this.logger.info(`Logged in as ${this.cts.client.user!.tag}`)
     const logchannel = this.cts.client.channels.cache.get('1025646462618587196') as TextChannel
     await logchannel.send('<@526889025894875158> online')
