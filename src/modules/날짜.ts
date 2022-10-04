@@ -15,7 +15,7 @@ class 날짜 extends Module {
     },
   })
   async 날짜(i: CommandInteraction) {
-    const diffms = new Date().getTime() - new Date('2022 10 17').getTime()
+    const diffms = new Date().getTime() - new Date('2020 10 17').getTime()
     const diffday = Math.floor(  diffms / 1000 / 60 / 60 / 24  )
     await i.reply(`오늘은 ${diffday}일 입니다.`)
   }
