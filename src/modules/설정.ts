@@ -85,6 +85,7 @@ class 설정 extends Module {
           `${대상.displayName}님의 현재 정보:\n` +
           '```\n' +
           `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
+          `공격력: ${userData.공격력}\n` +
           `소지품:\n` +
           `  R ${userData.소지품.재화.R}\n` +
           '```',
@@ -101,7 +102,7 @@ class 설정 extends Module {
           `<@${userID}>님의 정보:\n` +
             '```\n' +
             `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
-            `공격력: ${userData.공격력}` +
+            `공격력: ${userData.공격력}\n` +
             `소지품:\n` +
             `  R ${userData.소지품.재화.R}\n` +
             '```'
