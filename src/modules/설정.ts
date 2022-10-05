@@ -14,7 +14,7 @@ class 설정 extends Module {
     command: {
       type: 'CHAT_INPUT',
       name: '설정',
-      description: '[관리자 전용] 다른 사람의 경험치를 더하거나 뺍니다',
+      description: '[관리자 전용] 다른 사람의 경험치/R/공격력을 더하거나 뺍니다',
       options: [
         {
           name: '종류',
