@@ -7,6 +7,7 @@ export interface DBData {
       레벨: number // 1-index
       경험치: number // 0-index
     }
+    공격력: number // 1-index
     소지품: {
       재화: {
         R: number

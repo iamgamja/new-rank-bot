@@ -21,7 +21,7 @@ class 원격등록 extends Module {
           type: 'USER',
           required: true,
         },
-      ]
+      ],
     },
   })
   async 원격등록(i: CommandInteraction, @option('대상') 대상: GuildMember) {
@@ -36,7 +36,7 @@ class 원격등록 extends Module {
       await i.reply({ content: '관리자만 사용할 수 있습니다.', ephemeral: true })
       return
     }
-    
+
     const db = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
     const data = JSON.parse(db.content) as DBData
     // const member = i.member as GuildMember
@@ -45,7 +45,7 @@ class 원격등록 extends Module {
       await i.reply({ content: '```diff\n- 이미 등록되었습니다.\n```', ephemeral: true })
     } else {
       // 등록
-      data[member.user.id] = { 소지품: { 재화: { R: 0 } }, 스탯: { 경험치: 0, 레벨: 1, 티어: 0 } }
+      data[member.user.id] = { 소지품: { 재화: { R: 0 } }, 공격력: 1, 스탯: { 경험치: 0, 레벨: 1, 티어: 0 } }
       await db.edit(JSON.stringify(data))
 
       await i.reply({ content: '```diff\n+ 등록되었습니다.\n```' })
@@ -61,6 +61,7 @@ class 원격등록 extends Module {
           `<@${userID}>님의 정보:\n` +
             '```\n' +
             `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
+            `공격력: ${userData.공격력}` +
             `소지품:\n` +
             `  R ${userData.소지품.재화.R}\n` +
             '```'
