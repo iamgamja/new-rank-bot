@@ -14,11 +14,11 @@ class 설정 extends Module {
     command: {
       type: 'CHAT_INPUT',
       name: '설정',
-      description: '[관리자 전용] 다른 사람의 경험치/R/공격력을 더하거나 뺍니다',
+      description: '[관리자 전용] 다른 사람의 경험치/R/공격력/체력을 더하거나 뺍니다',
       options: [
         {
           name: '종류',
-          description: '설정할 스탯의 종류입니다. (`경험치 / R / 공격력` 중 택1)',
+          description: '설정할 스탯의 종류입니다. (`경험치 / R / 공격력 / 체력` 중 택1)',
           type: 'STRING',
           required: true,
         },
@@ -72,6 +72,10 @@ class 설정 extends Module {
           userData.공격력 += 수치
           break
         }
+        case '체력': {
+          userData.체력 += 수치
+          break
+        }
         default: {
           await i.reply({ content: '```diff\n- 올바르지 않은 종류입니다.\n```' })
           break
@@ -85,7 +89,7 @@ class 설정 extends Module {
           `${대상.displayName}님의 현재 정보:\n` +
           '```\n' +
           `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
-          `공격력: ${userData.공격력}\n` +
+          `공격력: ${userData.공격력} / 체력: ${userData.체력}\n` +
           `소지품:\n` +
           `  R ${userData.소지품.재화.R}\n` +
           '```',
@@ -102,7 +106,7 @@ class 설정 extends Module {
           `<@${userID}>님의 정보:\n` +
             '```\n' +
             `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
-            `공격력: ${userData.공격력}\n` +
+            `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
             `소지품:\n` +
             `  R ${userData.소지품.재화.R}\n` +
             '```'
