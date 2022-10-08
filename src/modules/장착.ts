@@ -80,8 +80,8 @@ class 장착 extends Module {
           `소지품:\n` +
           `  R ${userData.R}\n` +
           `장착:\n` +
-          `  무기: ${userData.무기}` +
-          `  방어구: ${userData.방어구}` +
+          `  무기: ${userData.무기}\n` +
+          `  방어구: ${userData.방어구}\n` +
           '```',
       })
 
@@ -100,8 +100,8 @@ class 장착 extends Module {
             `소지품:\n` +
             `  R ${userData.R}\n` +
             `장착:\n` +
-            `  무기: ${userData.무기}` +
-            `  방어구: ${userData.방어구}` +
+            `  무기: ${userData.무기}\n` +
+            `  방어구: ${userData.방어구}\n` +
             '```'
         )
       }
