@@ -29,25 +29,25 @@ class 프로필 extends Module {
     const member = 유저 || (i.member as GuildMember)
     if (member.user.id in data) {
       const userData = data[member.user.id]
-      
-      let tear = userData.스탯.티어
-      let level = userData.스탯.레벨
+
+      let tear = userData.티어
+      let level = userData.레벨
       while (tear) {
         tear -= 1
         level += (tear + 1) * 5
       }
       const 누적레벨 = level
-      const 목표경험치 = 2 ** ((누적레벨)-1) * 1000
-      const 남은경험치 = 목표경험치 - userData.스탯.경험치
+      const 목표경험치 = 2 ** (누적레벨 - 1) * 1000
+      const 남은경험치 = 목표경험치 - userData.경험치
 
       await i.reply({
         content:
           `${member.displayName}님의 정보:\n` +
           '```\n' +
-          `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치} (다음 레벨까지 EXP ${남은경험치})\n` +
+          `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치} (다음 레벨까지 EXP ${남은경험치})\n` +
           `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
           `소지품:\n` +
-          `  R ${userData.소지품.재화.R}\n` +
+          `  R ${userData.R}\n` +
           '```',
         ephemeral: false,
       })

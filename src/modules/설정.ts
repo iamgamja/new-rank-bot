@@ -57,25 +57,27 @@ class 설정 extends Module {
       switch (종류) {
         case '경험치': {
           // 이전 누적 레벨 계산
-          let 이전tear = userData.스탯.티어
-          let 이전level = userData.스탯.레벨
+          let 이전tear = userData.티어
+          let 이전level = userData.레벨
           while (이전tear) {
             이전tear -= 1
             이전level += (이전tear + 1) * 5
           }
           const 이전누적레벨 = 이전level
-          
+
           // 설정
-          const { 티어: oldTear, 레벨: oldLevel, 경험치: oldExp } = userData.스탯
+          const oldTear = userData.티어
+          const oldLevel = userData.레벨
+          const oldExp = userData.경험치
           this.logger.info(oldTear, oldLevel, oldExp + 수치)
           const [newTear, newLevel, newExp] = calculateExp(oldTear, oldLevel, oldExp + 수치)
-          userData.스탯.티어 = newTear
-          userData.스탯.레벨 = newLevel
-          userData.스탯.경험치 = newExp
+          userData.티어 = newTear
+          userData.레벨 = newLevel
+          userData.경험치 = newExp
 
           // 나중 누적 레벨 계산
-          let 나중tear = userData.스탯.티어
-          let 나중level = userData.스탯.레벨
+          let 나중tear = userData.티어
+          let 나중level = userData.레벨
           while (나중tear) {
             나중tear -= 1
             나중level += (나중tear + 1) * 5
@@ -90,7 +92,7 @@ class 설정 extends Module {
           break
         }
         case 'R': {
-          userData.소지품.재화.R += 수치
+          userData.R += 수치
           break
         }
         case '공격력': {
@@ -113,10 +115,10 @@ class 설정 extends Module {
           '✅\n' +
           `${대상.displayName}님의 현재 정보:\n` +
           '```\n' +
-          `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
+          `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치}\n` +
           `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
           `소지품:\n` +
-          `  R ${userData.소지품.재화.R}\n` +
+          `  R ${userData.R}\n` +
           '```',
       })
 
@@ -130,10 +132,10 @@ class 설정 extends Module {
         r.push(
           `<@${userID}>님의 정보:\n` +
             '```\n' +
-            `${Data_Tears[userData.스탯.티어]} Lv. ${userData.스탯.레벨} / EXP ${userData.스탯.경험치}\n` +
+            `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치}\n` +
             `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
             `소지품:\n` +
-            `  R ${userData.소지품.재화.R}\n` +
+            `  R ${userData.R}\n` +
             '```'
         )
       }
