@@ -10,5 +10,6 @@ export interface DBData {
     R: number
     무기: string
     방어구: string
+    id: number
   }
 }

@@ -42,7 +42,7 @@ class 프로필 extends Module {
 
       await i.reply({
         content:
-          `${member.displayName}님의 정보:\n` +
+          `${member.displayName}님 (ID: ${userData.id.toString().padStart(6, '0')}) 의 정보:\n` +
           '```\n' +
           `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치} (다음 레벨까지 EXP ${남은경험치})\n` +
           `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +

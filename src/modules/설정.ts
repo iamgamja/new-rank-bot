@@ -113,7 +113,7 @@ class 설정 extends Module {
       await i.reply({
         content:
           '✅\n' +
-          `${대상.displayName}님의 현재 정보:\n` +
+          `${대상.displayName}님 (ID: ${userData.id.toString().padStart(6, '0')}) 의 현재 정보:\n` +
           '```\n' +
           `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치}\n` +
           `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
@@ -133,7 +133,7 @@ class 설정 extends Module {
         const userData = data[userID]
 
         r.push(
-          `<@${userID}>님의 정보:\n` +
+          `<@${userID}>님 (ID: ${userData.id.toString().padStart(6, '0')}) 의 정보:\n` +
             '```\n' +
             `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치}\n` +
             `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
