@@ -61,7 +61,7 @@ class 장착 extends Module {
           break
         }
         case '방어구': {
-          userData.무기 = 이름
+          userData.방어구 = 이름
           break
         }
         default: {
