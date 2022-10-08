@@ -45,7 +45,7 @@ class 원격등록 extends Module {
       await i.reply({ content: '```diff\n- 이미 등록되었습니다.\n```', ephemeral: true })
     } else {
       // 등록
-      data[member.user.id] = { 티어: 0, 레벨: 1, 경험치: 0, 공격력: 1, 체력: 1, R: 0 }
+      data[member.user.id] = { 티어: 0, 레벨: 1, 경험치: 0, 공격력: 1, 체력: 1, R: 0, 무기: '없음', 방어구: '없음' }
       await db.edit(JSON.stringify(data))
 
       await i.reply({ content: '```diff\n+ 등록되었습니다.\n```' })
@@ -64,6 +64,9 @@ class 원격등록 extends Module {
             `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
             `소지품:\n` +
             `  R ${userData.R}\n` +
+            `장착:\n` +
+            `  무기: ${userData.무기}` +
+            `  방어구: ${userData.방어구}` +
             '```'
         )
       }

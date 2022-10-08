@@ -8,5 +8,7 @@ export interface DBData {
     공격력: number
     체력: number
     R: number
+    무기: string
+    방어구: string
   }
 }

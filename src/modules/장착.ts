@@ -5,7 +5,7 @@ import { DBData } from '../../types/DBData'
 import calculateExp from '../functions/calculateExp'
 import Data_Tears from '../data/tears'
 
-class 설정 extends Module {
+class 장착 extends Module {
   constructor(private cts: Client) {
     super()
   }
@@ -13,12 +13,12 @@ class 설정 extends Module {
   @applicationCommand({
     command: {
       type: 'CHAT_INPUT',
-      name: '설정',
-      description: '[관리자 전용] 다른 사람의 경험치/R/공격력/체력을 더하거나 뺍니다',
+      name: '장착',
+      description: '[관리자 전용] 다른 사람의 무기/방어구를 장착시킵니다',
       options: [
         {
           name: '종류',
-          description: '설정할 스탯의 종류입니다. (`경험치 / R / 공격력 / 체력` 중 택1)',
+          description: '장착할 아이템의 종류입니다. (`무기 / 방어구` 중 택1)',
           type: 'STRING',
           required: true,
         },
@@ -29,15 +29,15 @@ class 설정 extends Module {
           required: true,
         },
         {
-          name: '수치',
-          description: '더하려면 양수로, 빼려면 음수로 입력해주세요',
-          type: 'INTEGER',
+          name: '이름',
+          description: '장착할 아이템의 이름입니다.',
+          type: 'STRING',
           required: true,
         },
       ],
     },
   })
-  async 설정(i: CommandInteraction, @option('종류') 종류: string, @option('대상') 대상: GuildMember, @option('수치') 수치: number) {
+  async 장착(i: CommandInteraction, @option('종류') 종류: string, @option('대상') 대상: GuildMember, @option('이름') 이름: string) {
     const roles = i.member?.roles
     let isAdmin: boolean = false
     if (roles instanceof GuildMemberRoleManager) {
@@ -55,52 +55,12 @@ class 설정 extends Module {
       // 설정하기
       const userData = data[대상.id]
       switch (종류) {
-        case '경험치': {
-          // 이전 누적 레벨 계산
-          let 이전tear = userData.티어
-          let 이전level = userData.레벨
-          while (이전tear) {
-            이전tear -= 1
-            이전level += (이전tear + 1) * 5
-          }
-          const 이전누적레벨 = 이전level
-
-          // 설정
-          const oldTear = userData.티어
-          const oldLevel = userData.레벨
-          const oldExp = userData.경험치
-          this.logger.info(oldTear, oldLevel, oldExp + 수치)
-          const [newTear, newLevel, newExp] = calculateExp(oldTear, oldLevel, oldExp + 수치)
-          userData.티어 = newTear
-          userData.레벨 = newLevel
-          userData.경험치 = newExp
-
-          // 나중 누적 레벨 계산
-          let 나중tear = userData.티어
-          let 나중level = userData.레벨
-          while (나중tear) {
-            나중tear -= 1
-            나중level += (나중tear + 1) * 5
-          }
-          const 나중누적레벨 = 나중level
-
-          const 추가된누적레벨 = 나중누적레벨 - 이전누적레벨
-
-          // 공격력, 체력 수정
-          userData.공격력 += 추가된누적레벨
-          userData.체력 += 추가된누적레벨
+        case '무기': {
+          userData.무기 = 이름
           break
         }
-        case 'R': {
-          userData.R += 수치
-          break
-        }
-        case '공격력': {
-          userData.공격력 += 수치
-          break
-        }
-        case '체력': {
-          userData.체력 += 수치
+        case '방어구': {
+          userData.무기 = 이름
           break
         }
         default: {
@@ -154,5 +114,5 @@ class 설정 extends Module {
 }
 
 export function install(cts: Client) {
-  return new 설정(cts)
+  return new 장착(cts)
 }
