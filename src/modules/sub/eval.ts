@@ -1,8 +1,8 @@
 import { Module, applicationCommand, option } from '@pikokr/command.ts'
-import { Client } from '../structures/client'
+import { Client } from '../../structures/client'
 import { CommandInteraction, GuildMember, TextChannel } from 'discord.js'
-import { DBData } from '../../types/DBData'
-import calculateExp from '../functions/calculateExp'
+import { DBData } from '../../../types/DBData'
+import calculateExp from '../../functions/calculateExp'
 
 class Eval extends Module {
   constructor(private cts: Client) {

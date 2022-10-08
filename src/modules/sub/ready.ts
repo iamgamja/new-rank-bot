@@ -1,7 +1,6 @@
 import { listener, Module } from '@pikokr/command.ts'
-import { Client } from '../structures/client'
+import { Client } from '../../structures/client'
 import { TextChannel } from 'discord.js'
-
 
 class Ready extends Module {
   constructor(private cts: Client) {
