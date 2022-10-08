@@ -48,6 +48,9 @@ class 프로필 extends Module {
           `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
           `소지품:\n` +
           `  R ${userData.R}\n` +
+          `장착:\n` +
+          `  무기: ${userData.무기}\n` +
+          `  방어구: ${userData.방어구}\n` +
           '```',
         ephemeral: false,
       })
