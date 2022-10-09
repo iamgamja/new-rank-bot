@@ -24,7 +24,7 @@ async function makeCommandFunc(cts: Client, name: string) {
     const target = Data_Dungeon[name]
     if (member.user.id in data) {
       const userData = data[member.user.id]
-      if (Math.ceil(target[0] / userData.공격력) <= Math.ceil(userData.체력 / target[1])) {
+      if (target[1] !== 0 && Math.ceil(target[0] / userData.공격력) <= Math.ceil(userData.체력 / target[1])) {
         await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
       } else {
         // 처치
