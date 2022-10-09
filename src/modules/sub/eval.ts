@@ -37,11 +37,6 @@ class Eval extends Module {
       return await editUserInfoMsg(cts, data)
     }
 
-    async function tmp(cts: Client) {
-      const row = new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('primary').setLabel('Click me!').setStyle(ButtonStyle.Primary))
-      // cts.
-    }
-
     try {
       const result = eval(식)
       this.logger.info(result)
