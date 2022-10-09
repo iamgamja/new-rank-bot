@@ -83,54 +83,54 @@ class Dungeon extends Module {
     super()
   }
 
-  @applicationCommand(makeCommandOption('슬라임'))
-  async ['슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '슬라임')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('슬라임'))
+  // async ['슬라임'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '슬라임')
+  //   )(i)
+  // }
 
-  @applicationCommand(makeCommandOption('풀슬라임'))
-  async ['풀슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '풀슬라임')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('풀슬라임'))
+  // async ['풀슬라임'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '풀슬라임')
+  //   )(i)
+  // }
 
-  @applicationCommand(makeCommandOption('잎슬라임'))
-  async ['잎슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '잎슬라임')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('잎슬라임'))
+  // async ['잎슬라임'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '잎슬라임')
+  //   )(i)
+  // }
 
-  @applicationCommand(makeCommandOption('나무슬라임'))
-  async ['나무슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '나무슬라임')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('나무슬라임'))
+  // async ['나무슬라임'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '나무슬라임')
+  //   )(i)
+  // }
 
-  @applicationCommand(makeCommandOption('숲슬라임'))
-  async ['숲슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '숲슬라임')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('숲슬라임'))
+  // async ['숲슬라임'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '숲슬라임')
+  //   )(i)
+  // }
 
-  @applicationCommand(makeCommandOption('작은강가슬라임'))
-  async ['작은강가슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '작은강가슬라임')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('작은강가슬라임'))
+  // async ['작은강가슬라임'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '작은강가슬라임')
+  //   )(i)
+  // }
 
-  @applicationCommand(makeCommandOption('작은강가정령'))
-  async ['작은강가정령'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '작은강가정령')
-    )(i)
-  }
+  // @applicationCommand(makeCommandOption('작은강가정령'))
+  // async ['작은강가정령'](i: CommandInteraction) {
+  //   return await (
+  //     await makeCommandFunc(this.cts, '작은강가정령')
+  //   )(i)
+  // }
 }
 
 export function install(cts: Client) {
