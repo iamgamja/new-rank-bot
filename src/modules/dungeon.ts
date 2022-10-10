@@ -34,13 +34,11 @@ async function makeCommandFunc(cts: Client, name: string) {
       if (member.user.id in coolTimeData[target.channelID]) {
         if (coolTimeData[target.channelID][member.user.id] <= new Date().getTime()) {
           ispossible_cooltime = true // 시간이 지났으므로 가능
-          coolTimeData[target.channelID][member.user.id] = new Date().getTime() + Data_CoolTime[target.channelID] * 1000
         } else {
           ispossible_cooltime = false
         }
       } else {
         ispossible_cooltime = true // 아직 실행한 적이 없으면 가능
-        coolTimeData[target.channelID][member.user.id] = new Date().getTime() + Data_CoolTime[target.channelID] * 1000
       }
       if (!ispossible_cooltime) {
         await i.reply({
@@ -49,6 +47,9 @@ async function makeCommandFunc(cts: Client, name: string) {
         })
         return
       }
+
+      coolTimeData[target.channelID][member.user.id] = new Date().getTime() + Data_CoolTime[target.channelID] * 1000
+      await coolTimeDB.edit(JSON.stringify(coolTimeData))
 
       const userData = data[member.user.id]
       if (target.공격력 !== 0 && Math.ceil(target.체력 / userData.공격력) <= Math.ceil(userData.체력 / target.공격력)) {
