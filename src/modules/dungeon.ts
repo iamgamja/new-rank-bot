@@ -163,6 +163,13 @@ class Dungeon extends Module {
     )(i)
   }
 
+  @applicationCommand(makeCommandOption('작은호수슬라임'))
+  async ['작은호수슬라임'](i: CommandInteraction) {
+    return await (
+      await makeCommandFunc(this.cts, '작은호수슬라임')
+    )(i)
+  }
+
   @applicationCommand(makeCommandOption('작은강가슬라임'))
   async ['작은강가슬라임'](i: CommandInteraction) {
     return await (
@@ -174,6 +181,13 @@ class Dungeon extends Module {
   async ['작은강가정령'](i: CommandInteraction) {
     return await (
       await makeCommandFunc(this.cts, '작은강가정령')
+    )(i)
+  }
+
+  @applicationCommand(makeCommandOption('가을슬라임'))
+  async ['가을슬라임'](i: CommandInteraction) {
+    return await (
+      await makeCommandFunc(this.cts, '가을슬라임')
     )(i)
   }
 }
