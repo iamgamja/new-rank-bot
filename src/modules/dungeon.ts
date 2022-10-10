@@ -52,7 +52,15 @@ async function makeCommandFunc(cts: Client, name: string) {
       await coolTimeDB.edit(JSON.stringify(coolTimeData))
 
       const userData = data[member.user.id]
-      if (target.공격력 !== 0 && Math.ceil(target.체력 / userData.공격력) <= Math.ceil(userData.체력 / target.공격력)) {
+
+      let ispossible_strong: boolean
+      if (target.공격력 === 0) {
+        ispossible_strong = true
+      } else {
+        ispossible_strong = Math.ceil(target.체력 / userData.공격력) <= Math.ceil(userData.체력 / target.공격력) ? false : true
+      }
+
+      if (!ispossible_strong) {
         await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
         return
       }
