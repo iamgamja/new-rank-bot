@@ -22,13 +22,17 @@ async function makeCommandFunc(cts: Client, name: string) {
     const data = JSON.parse(db.content) as DBData
     const member = i.member as GuildMember
     const target = Data_Dungeon[name]
+    if (i.channelId !== target.channelID) {
+      await i.reply({ content: '```diff\n- ' + `<#${target.channelID}>` + '에서만 사용할 수 있습니다.\n```', ephemeral: true })
+      return
+    }
     if (member.user.id in data) {
       const userData = data[member.user.id]
-      if (target[1] !== 0 && Math.ceil(target[0] / userData.공격력) <= Math.ceil(userData.체력 / target[1])) {
+      if (target.공격력 !== 0 && Math.ceil(target.체력 / userData.공격력) <= Math.ceil(userData.체력 / target.공격력)) {
         await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
       } else {
         // 처치
-        userData.R += target[3]
+        userData.R += target.획득R
 
         // 이전 누적 레벨 계산
         let 이전tear = userData.티어
@@ -44,7 +48,7 @@ async function makeCommandFunc(cts: Client, name: string) {
         const oldLevel = userData.레벨
         const oldExp = userData.경험치
         // this.logger.info(oldTear, oldLevel, oldExp + target[2])
-        const [newTear, newLevel, newExp] = calculateExp(oldTear, oldLevel, oldExp + target[2])
+        const [newTear, newLevel, newExp] = calculateExp(oldTear, oldLevel, oldExp + target.획득경험치)
         userData.티어 = newTear
         userData.레벨 = newLevel
         userData.경험치 = newExp
@@ -68,7 +72,7 @@ async function makeCommandFunc(cts: Client, name: string) {
 
         await editUserInfoMsg(cts, data)
 
-        await i.reply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target[2]}\n+ R ${target[3]}` + '```' })
+        await i.reply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}` + '```' })
 
         /** @todo 획득 아이템 자동화 */
       }
