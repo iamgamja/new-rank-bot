@@ -105,9 +105,18 @@ async function makeCommandFunc(cts: Client, name: string) {
 
       await editUserInfoMsg(cts, data)
 
-      await i.reply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}` + '```' })
+      const items: string[] = []
 
-      /** @todo 획득 아이템 자동화 */
+      // 아이템 획득
+      for (let itemName in target.드롭아이템) {
+        if (Math.random() < target.드롭아이템[itemName] / 100) {
+          items.push(itemName)
+        }
+      }
+
+      const items_str = items.map((s) => `+ ${s}`).join('\n')
+
+      await i.reply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
     } else {
       await i.reply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```', ephemeral: true })
     }
