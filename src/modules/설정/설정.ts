@@ -1,10 +1,10 @@
 import { Module, applicationCommand, option } from '@pikokr/command.ts'
-import { Client } from '../structures/client'
+import { Client } from '../../structures/client'
 import { CommandInteraction, GuildMember, GuildMemberRoleManager, Snowflake, TextChannel } from 'discord.js'
-import { DBData } from '../../types/DBData'
-import calculateExp from '../functions/calculateExp'
-import Data_Tears from '../data/tears'
-import editUserInfoMsg from '../functions/editUserInfoMsg'
+import { DBData } from '../../../types/DBData'
+import calculateExp from '../../functions/calculateExp'
+import Data_Tears from '../../data/tears'
+import editUserInfoMsg from '../../functions/editUserInfoMsg'
 
 class 설정 extends Module {
   constructor(private cts: Client) {
