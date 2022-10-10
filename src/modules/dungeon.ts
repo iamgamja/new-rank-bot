@@ -25,7 +25,7 @@ async function makeCommandFunc(cts: Client, name: string) {
     const target = Data_Dungeon[name]
     if (member.user.id in data) {
       if (i.channelId !== target.channelID) {
-        await i.reply({ content: '```diff\n- ' + `<#${target.channelID}>` + '에서만 사용할 수 있습니다.\n```', ephemeral: true })
+        await i.reply({ content: '```diff\n- 잘못된 채널입니다.\n```\n' + `실행 가능한 채널: <#${target.channelID}>`, ephemeral: true })
         return
       }
       const coolTimeDB = await (cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1028912965786796144')
@@ -42,7 +42,7 @@ async function makeCommandFunc(cts: Client, name: string) {
       }
       if (!ispossible_cooltime) {
         await i.reply({
-          content: '```diff\n- 쿨타임을 기다려주세요.\n' + `실행 가능한 시간은 <t:${Math.floor(coolTimeData[target.channelID][member.user.id] / 1000)}:R>입니다.` + '\n```',
+          content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(coolTimeData[target.channelID][member.user.id] / 1000)}:R>`,
           ephemeral: true,
         })
         return
