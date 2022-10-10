@@ -57,7 +57,7 @@ async function makeCommandFunc(cts: Client, name: string) {
       if (target.공격력 === 0) {
         ispossible_strong = true
       } else {
-        ispossible_strong = Math.ceil(target.체력 / userData.공격력) <= Math.ceil(userData.체력 / target.공격력) ? false : true
+        ispossible_strong = Math.ceil(target.체력 / userData.공격력) >= Math.ceil(userData.체력 / target.공격력) ? false : true
       }
 
       if (!ispossible_strong) {
