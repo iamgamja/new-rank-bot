@@ -3,9 +3,9 @@ import { Client } from '../structures/client'
 import { ApplicationCommandType, CommandInteraction, GuildMember, TextChannel } from 'discord.js'
 import { DBData } from '../../types/DBData'
 import Data_Dungeon from '../data/Dungeon'
-import calculateExp from '../functions/calculateExp'
-import editUserInfoMsg from '../functions/editUserInfoMsg'
 import Data_CoolTime from '../data/cooltime'
+import addExp from '../functions/add/addExp'
+import addThing from '../functions/add/addThing'
 
 function makeCommandOption(name: string) {
   return {
@@ -66,49 +66,8 @@ async function makeCommandFunc(cts: Client, name: string) {
         await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
         return
       }
-      // 처치
-      userData.R += target.획득R
-
-      // 이전 누적 레벨 계산
-      let 이전tear = userData.티어
-      let 이전level = userData.레벨
-      while (이전tear) {
-        이전tear -= 1
-        이전level += (이전tear + 1) * 5
-      }
-      const 이전누적레벨 = 이전level
-
-      // 설정
-      const oldTear = userData.티어
-      const oldLevel = userData.레벨
-      const oldExp = userData.경험치
-      // this.logger.info(oldTear, oldLevel, oldExp + target[2])
-      const [newTear, newLevel, newExp] = calculateExp(oldTear, oldLevel, oldExp + target.획득경험치)
-      userData.티어 = newTear
-      userData.레벨 = newLevel
-      userData.경험치 = newExp
-
-      // 나중 누적 레벨 계산
-      let 나중tear = userData.티어
-      let 나중level = userData.레벨
-      while (나중tear) {
-        나중tear -= 1
-        나중level += (나중tear + 1) * 5
-      }
-      const 나중누적레벨 = 나중level
-
-      const 추가된누적레벨 = 나중누적레벨 - 이전누적레벨
-
-      // 공격력, 체력 수정
-      userData.공격력 += 추가된누적레벨
-      userData.체력 += 추가된누적레벨
-
-      await db.edit(JSON.stringify(data))
-
-      await editUserInfoMsg(cts, data)
 
       const items: string[] = []
-
       // 아이템 획득
       for (let itemName in target.드롭아이템) {
         if (Math.random() < target.드롭아이템[itemName] / 100) {
@@ -118,7 +77,13 @@ async function makeCommandFunc(cts: Client, name: string) {
 
       const items_str = items.map((s) => `+ ${s}`).join('\n')
 
-      await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
+      const result = await addExp(cts, i.member as GuildMember, target.획득경험치)
+      const result2 = await addThing(cts, i.member as GuildMember, 'R', target.획득R)
+      if (result && result2) {
+        await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
+      } else {
+        // never
+      }
     } else {
       await i.reply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```', ephemeral: true })
     }
