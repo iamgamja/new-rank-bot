@@ -5,6 +5,7 @@ import { DBData } from '../../../types/DBData'
 import calculateExp from '../../functions/calculateExp'
 import Data_Tears from '../../data/tears'
 import editUserInfoMsg from '../../functions/editUserInfoMsg'
+import addExp from '../../functions/add/addExp'
 
 class 경험치 extends Module {
   constructor(private cts: Client) {
@@ -44,65 +45,25 @@ class 경험치 extends Module {
       await i.reply({ content: '관리자만 사용할 수 있습니다.', ephemeral: true })
       return
     }
-    const db = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
-    const data = JSON.parse(db.content) as DBData
-    if (대상.id in data) {
-      // 설정하기
-      const userData = data[대상.id]
-
-      // 이전 누적 레벨 계산
-      let 이전tear = userData.티어
-      let 이전level = userData.레벨
-      while (이전tear) {
-        이전tear -= 1
-        이전level += (이전tear + 1) * 5
-      }
-      const 이전누적레벨 = 이전level
-
-      // 설정
-      const oldTear = userData.티어
-      const oldLevel = userData.레벨
-      const oldExp = userData.경험치
-      this.logger.info(oldTear, oldLevel, oldExp + 수치)
-      const [newTear, newLevel, newExp] = calculateExp(oldTear, oldLevel, oldExp + 수치)
-      userData.티어 = newTear
-      userData.레벨 = newLevel
-      userData.경험치 = newExp
-
-      // 나중 누적 레벨 계산
-      let 나중tear = userData.티어
-      let 나중level = userData.레벨
-      while (나중tear) {
-        나중tear -= 1
-        나중level += (나중tear + 1) * 5
-      }
-      const 나중누적레벨 = 나중level
-
-      const 추가된누적레벨 = 나중누적레벨 - 이전누적레벨
-
-      // 공격력, 체력 수정
-      userData.공격력 += 추가된누적레벨
-      userData.체력 += 추가된누적레벨
-
-      await db.edit(JSON.stringify(data))
-      await i.reply({
+    await i.deferReply()
+    const result = await addExp(this.cts, 대상, 수치)
+    if (result) {
+      await i.editReply({
         content:
           '✅\n' +
-          `${대상.displayName}님 (ID: ${userData.id.toString().padStart(6, '0')}) 의 현재 정보:\n` +
+          `${대상.displayName}님 (ID: ${result.id.toString().padStart(6, '0')}) 의 현재 정보:\n` +
           '```\n' +
-          `${Data_Tears[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치}\n` +
-          `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
+          `${Data_Tears[result.티어]} Lv. ${result.레벨} / EXP ${result.경험치}\n` +
+          `공격력: ${result.공격력} / HP: ${result.체력}\n` +
           `소지품:\n` +
-          `  R ${userData.R}\n` +
+          `  R ${result.R}\n` +
           `장착:\n` +
-          `  무기: ${userData.무기}\n` +
-          `  방어구: ${userData.방어구}\n` +
+          `  무기: ${result.무기}\n` +
+          `  방어구: ${result.방어구}\n` +
           '```',
       })
-
-      await editUserInfoMsg(this.cts, data)
     } else {
-      await i.reply({ content: '```diff\n- 등록되지 않은 대상입니다.\n```' })
+      await i.editReply({ content: '```diff\n- 등록되지 않은 대상입니다.\n```' })
     }
   }
 }
