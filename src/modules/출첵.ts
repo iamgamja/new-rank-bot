@@ -45,7 +45,7 @@ class 출첵 extends Module {
 
       if (!ispossible_cooltime) {
         await i.reply({
-          content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(출첵coolTimeData[member.id] / 1000)}:R>`,
+          content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor((출첵coolTimeData[member.id] - 9 * 60 * 60 * 1000) / 1000)}:R>`,
           ephemeral: true,
         })
         return
