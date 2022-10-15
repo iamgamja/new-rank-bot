@@ -51,13 +51,15 @@ async function makeCommandFunc(cts: Client, name: string) {
       coolTimeData[target.channelID][member.user.id] = new Date().getTime() + Data_CoolTime[target.channelID] * 1000
       await coolTimeDB.edit(JSON.stringify(coolTimeData))
 
+      await i.deferReply()
+
       const userData = data[member.user.id]
 
       let ispossible_strong: boolean
       if (target.공격력 === 0) {
         ispossible_strong = true
       } else {
-        ispossible_strong = Math.ceil(target.체력 / userData.공격력) > Math.ceil(userData.체력 / target.공격력) ? false : true
+        ispossible_strong = Math.ceil(target.체력 / userData.공격력) >= Math.ceil(userData.체력 / target.공격력) ? false : true
       }
 
       if (!ispossible_strong) {
@@ -116,7 +118,7 @@ async function makeCommandFunc(cts: Client, name: string) {
 
       const items_str = items.map((s) => `+ ${s}`).join('\n')
 
-      await i.reply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
+      await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
     } else {
       await i.reply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```', ephemeral: true })
     }
