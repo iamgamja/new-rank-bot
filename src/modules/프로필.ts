@@ -1,8 +1,8 @@
 import { Module, applicationCommand, option } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
-import { CommandInteraction, GuildMember, TextChannel } from 'discord.js'
-import { DBData } from '../../types/DBData'
+import { CommandInteraction, GuildMember } from 'discord.js'
 import Data_Tears from '../data/tears'
+import { User } from '../class/User'
 
 class 프로필 extends Module {
   constructor(private cts: Client) {
@@ -24,11 +24,11 @@ class 프로필 extends Module {
     },
   })
   async 프로필(i: CommandInteraction, @option('유저') 유저?: GuildMember) {
-    const db = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
-    const data = JSON.parse(db.content) as DBData
-    const member = 유저 || (i.member as GuildMember)
-    if (member.user.id in data) {
-      const userData = data[member.user.id]
+    try {
+      const member = 유저 || (i.member as GuildMember)
+      const user = new User(this.cts, member)
+      await user._setup()
+      const userData = user.userData
 
       let tear = userData.티어
       let level = userData.레벨
@@ -52,9 +52,8 @@ class 프로필 extends Module {
           `  무기: ${userData.무기}\n` +
           `  방어구: ${userData.방어구}\n` +
           '```',
-        ephemeral: false,
       })
-    } else {
+    } catch (e) {
       await i.reply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```', ephemeral: true })
     }
   }

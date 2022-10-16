@@ -1,11 +1,10 @@
 import { Module, applicationCommand } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
 import { ApplicationCommandType, CommandInteraction, GuildMember, TextChannel } from 'discord.js'
-import { DBData } from '../../types/DBData'
 import Data_Dungeon from '../data/Dungeon'
 import Data_CoolTime from '../data/cooltime'
-import addExp from '../functions/add/addExp'
-import addThing from '../functions/add/addThing'
+import { User } from '../class/User'
+import UserNotFoundError from '../class/error/UserNotFoundError'
 
 function makeCommandOption(name: string) {
   return {
@@ -17,21 +16,27 @@ function makeCommandOption(name: string) {
   }
 }
 
-async function makeCommandFunc(cts: Client, name: string) {
+function makeCommandFunc(cts: Client, name: string) {
   return async function resultFunc(i: CommandInteraction) {
-    const db = await (cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
-    const data = JSON.parse(db.content) as DBData
-    const member = i.member as GuildMember
-    const target = Data_Dungeon[name]
-    if (member.user.id in data) {
+    await i.deferReply()
+
+    try {
+      const member = i.member as GuildMember
+      const user = new User(cts, member)
+      await user._setup()
+
+      const userData = user.userData
+
+      const target = Data_Dungeon[name]
+
       if (i.channelId !== target.channelID) {
-        await i.reply({ content: '```diff\n- 잘못된 채널입니다.\n```\n' + `실행 가능한 채널: <#${target.channelID}>`, ephemeral: true })
+        await i.editReply({ content: '```diff\n- 잘못된 채널입니다.\n```\n' + `실행 가능한 채널: <#${target.channelID}>` })
         return
       }
       const coolTimeDB = await (cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1028912965786796144')
       const coolTimeData = JSON.parse(coolTimeDB.content)
       let ispossible_cooltime: boolean
-      if (member.user.id in coolTimeData[target.channelID]) {
+      if (member.id in coolTimeData[target.channelID]) {
         if (coolTimeData[target.channelID][member.user.id] <= new Date().getTime()) {
           ispossible_cooltime = true // 시간이 지났으므로 가능
         } else {
@@ -41,19 +46,14 @@ async function makeCommandFunc(cts: Client, name: string) {
         ispossible_cooltime = true // 아직 실행한 적이 없으면 가능
       }
       if (!ispossible_cooltime) {
-        await i.reply({
+        await i.editReply({
           content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(coolTimeData[target.channelID][member.user.id] / 1000)}:R>`,
-          ephemeral: true,
         })
         return
       }
 
       coolTimeData[target.channelID][member.user.id] = new Date().getTime() + Data_CoolTime[target.channelID] * 1000
       await coolTimeDB.edit(JSON.stringify(coolTimeData))
-
-      await i.deferReply()
-
-      const userData = data[member.user.id]
 
       let ispossible_strong: boolean
       if (target.공격력 === 0) {
@@ -77,15 +77,16 @@ async function makeCommandFunc(cts: Client, name: string) {
 
       const items_str = items.map((s) => `+ ${s}`).join('\n')
 
-      const result = await addExp(cts, i.member as GuildMember, target.획득경험치)
-      const result2 = await addThing(cts, i.member as GuildMember, 'R', target.획득R)
-      if (result && result2) {
-        await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
-      } else {
-        // never
+      await user.add('경험치', target.획득경험치)
+      await user.add('R', target.획득R)
+      await user.done()
+
+      await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
+    } catch (e) {
+      if (e instanceof UserNotFoundError) {
+        await i.editReply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```' })
+        return
       }
-    } else {
-      await i.reply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```', ephemeral: true })
     }
   }
 }
@@ -97,65 +98,47 @@ class Dungeon extends Module {
 
   @applicationCommand(makeCommandOption('슬라임'))
   async ['슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('풀슬라임'))
   async ['풀슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '풀슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '풀슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('잎슬라임'))
   async ['잎슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '잎슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '잎슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('나무슬라임'))
   async ['나무슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '나무슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '나무슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('숲슬라임'))
   async ['숲슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '숲슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '숲슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('작은호수슬라임'))
   async ['작은호수슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '작은호수슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '작은호수슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('작은강가슬라임'))
   async ['작은강가슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '작은강가슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '작은강가슬라임')(i)
   }
 
   @applicationCommand(makeCommandOption('작은강가정령'))
   async ['작은강가정령'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '작은강가정령')
-    )(i)
+    return await makeCommandFunc(this.cts, '작은강가정령')(i)
   }
 
   @applicationCommand(makeCommandOption('가을슬라임'))
   async ['가을슬라임'](i: CommandInteraction) {
-    return await (
-      await makeCommandFunc(this.cts, '가을슬라임')
-    )(i)
+    return await makeCommandFunc(this.cts, '가을슬라임')(i)
   }
 }
 
