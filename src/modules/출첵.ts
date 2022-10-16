@@ -66,6 +66,7 @@ class 출첵 extends Module {
 
       await user.add('경험치', 50)
       await user.add('R', 50)
+      await user.done()
 
       await i.editReply({
         content: '```diff\n출첵했습니다.\n+ EXP 50\n+ R 50\n```',
