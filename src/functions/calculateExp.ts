@@ -7,7 +7,7 @@ export default function calculateExp(tear: number, level: number, exp: number) {
     tear -= 1
     level += (tear + 1) * 5
   }
-  while (level) {
+  while (level > 1) {
     level -= 1
     exp += 2 ** ((level)-1) * 1000
   }
@@ -19,7 +19,7 @@ export default function calculateExp(tear: number, level: number, exp: number) {
     exp -= 2 ** ((level)-1) * 1000
     level += 1
   }
-  while (level >= (tear + 1) * 5) {
+  while (level > (tear + 1) * 5) {
     level -= (tear + 1) * 5
     tear += 1
   }
