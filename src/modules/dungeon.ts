@@ -136,6 +136,22 @@ class Dungeon extends Module {
     return await makeCommandFunc(this.cts, '작은강가정령')(i)
   }
 
+  @applicationCommand(makeCommandOption('강슬라임'))
+  async ['강슬라임'](i: CommandInteraction) {
+    return await makeCommandFunc(this.cts, '강슬라임')(i)
+  }
+
+  @applicationCommand(makeCommandOption('퍼실슬라임'))
+  async ['퍼실슬라임'](i: CommandInteraction) {
+    return await makeCommandFunc(this.cts, '퍼실슬라임')(i)
+  }
+
+  @applicationCommand(makeCommandOption('퍼실의정령'))
+  async ['퍼실의정령'](i: CommandInteraction) {
+    return await makeCommandFunc(this.cts, '퍼실의정령')(i)
+  }
+
+  // 계절
   @applicationCommand(makeCommandOption('가을슬라임'))
   async ['가을슬라임'](i: CommandInteraction) {
     return await makeCommandFunc(this.cts, '가을슬라임')(i)
