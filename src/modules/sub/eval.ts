@@ -30,8 +30,8 @@ class Eval extends Module {
     if ((i.member as GuildMember).id !== '526889025894875158') return
 
     const db = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1025653282254880829')
-    const data = JSON.parse(db.content)
     const userInfoMsg = await (this.cts.client.channels.cache.get('1025347124294070282') as TextChannel).messages.fetch('1025975950439088168')
+    const coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1028912965786796144')
 
     async function editUserInfoMsg_(cts: Client, data: DBData) {
       return await editUserInfoMsg(cts, data)
