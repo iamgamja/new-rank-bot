@@ -63,7 +63,7 @@ function makeCommandFunc(cts: Client, name: string) {
       }
 
       if (!ispossible_strong) {
-        await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
+        await i.editReply({ content: '```diff\n- 처치하지 못했습니다...\n```' })
         return
       }
 
