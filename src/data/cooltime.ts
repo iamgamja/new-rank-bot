@@ -8,6 +8,7 @@ const Data_CoolTime: { [channelId: Snowflake]: number } = {
   '1026161001407725588': 30,
   '1026124882746032249': 1 * 60 * 60,
   '1026129415102550036': 6 * 60 * 60,
+  '1032216362103353384': 30,
 }
 
 export default Data_CoolTime
