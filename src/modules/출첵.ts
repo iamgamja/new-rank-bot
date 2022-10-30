@@ -40,8 +40,8 @@ class 출첵 extends Module {
       return
     }
 
-    await user.add('경험치', 50)
-    await user.add('R', 50)
+    await user.add('경험치', 2 ** (user.누적레벨 - 1) * 10)
+    await user.add('R', 2 ** (user.누적레벨 - 1) * 10)
     await user.done()
 
     await i.editReply({
