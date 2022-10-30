@@ -43,7 +43,7 @@ export class User {
     this.coolTimeData = JSON.parse(this.coolTimeDB.content)
 
     this.도박coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1036179914367447041')
-    this.도박coolTimeData = JSON.parse(this.coolTimeDB.content)
+    this.도박coolTimeData = JSON.parse(this.도박coolTimeDB.content)
   }
 
   async add(name: '경험치' | 'R' | '공격력' | '체력', n: number) {
