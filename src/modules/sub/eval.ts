@@ -33,6 +33,7 @@ class Eval extends Module {
     const userInfoMsg = await (this.cts.client.channels.cache.get('1025347124294070282') as TextChannel).messages.fetch('1025975950439088168')
     const coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1028912965786796144')
     const 출첵coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1030671119797207040')
+    const 도박coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1036179914367447041')
 
     async function editUserInfoMsg_(cts: Client, data: DBData) {
       return await editUserInfoMsg(cts, data)
