@@ -3,7 +3,7 @@
 import { Module, applicationCommand, option } from '@pikokr/command.ts'
 import { Client } from '../../structures/client'
 import { CommandInteraction, GuildMember, TextChannel } from 'discord.js'
-import { DBData } from '../../../types/DBData'
+import { DBData } from '../../types/DBData'
 import editUserInfoMsg from '../../functions/editUserInfoMsg'
 
 class Eval extends Module {
