@@ -8,6 +8,7 @@ import editUserInfoMsg from '../functions/editUserInfoMsg'
 import { Client } from '../structures/client'
 import UserNotFoundError from './error/UserNotFoundError'
 import Data_CoolTime from '../data/cooltime'
+import { 도박CoolTimeDBData } from '../type/도박CoolTimeDBData'
 
 export interface User {
   cts: Client
@@ -19,6 +20,8 @@ export interface User {
   출첵coolTimeData: 출첵CoolTimeDBData
   coolTimeDB: Message
   coolTimeData: CoolTimeDBData
+  도박coolTimeDB: Message
+  도박coolTimeData: 도박CoolTimeDBData
 }
 
 export class User {
@@ -38,6 +41,9 @@ export class User {
 
     this.coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1028912965786796144')
     this.coolTimeData = JSON.parse(this.coolTimeDB.content)
+
+    this.도박coolTimeDB = await (this.cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1036179914367447041')
+    this.도박coolTimeData = JSON.parse(this.coolTimeDB.content)
   }
 
   async add(name: '경험치' | 'R' | '공격력' | '체력', n: number) {
@@ -138,10 +144,35 @@ export class User {
       result.can공격 = true // 아직 실행한 적이 없으면 가능
     }
 
-    // db 수정
-    this.coolTimeData[channelID][this.member.user.id] = new Date().getTime() + Data_CoolTime[channelID] * 1000
-    await this.coolTimeDB.edit(JSON.stringify(this.coolTimeData))
+    if (result.can공격) {
+      // db 수정
+      this.coolTimeData[channelID][this.member.user.id] = new Date().getTime() + Data_CoolTime[channelID] * 1000
+      await this.coolTimeDB.edit(JSON.stringify(this.coolTimeData))
+    }
 
+    return result
+  }
+
+  async can도박() {
+    const canTime = this.도박coolTimeData[this.member.id]
+    const result: { can도박: boolean; canTime: number } = {
+      can도박: false,
+      canTime,
+    }
+
+    if (this.member.id in this.도박coolTimeData) {
+      if (canTime <= new Date().getTime()) {
+        result.can도박 = true // 시간이 지났으므로 가능
+      }
+    } else {
+      result.can도박 = true // 아직 실행한 적이 없으면 가능
+    }
+
+    if (result.can도박) {
+      // db 수정
+      this.도박coolTimeData[this.member.user.id] = new Date().getTime() + 60 * 1000
+      await this.도박coolTimeDB.edit(JSON.stringify(this.도박coolTimeData))
+    }
     return result
   }
 
