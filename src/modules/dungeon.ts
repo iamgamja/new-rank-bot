@@ -34,7 +34,7 @@ function makeCommandFunc(cts: Client, name: string) {
       return
     }
 
-    const [can공격, canTime] = await user.can공격(target.channelID)
+    const { can공격, canTime } = await user.can공격(target.channelID)
     if (!can공격) {
       await i.editReply({
         content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(canTime / 1000)}:R>`,

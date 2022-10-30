@@ -30,7 +30,7 @@ class 출첵 extends Module {
       return
     }
 
-    const [can출첵, canTime] = await user.can출첵()
+    const { can출첵, canTime } = await user.can출첵()
     if (!can출첵) {
       await i.editReply({
         content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor((canTime - 9 * 60 * 60 * 1000) / 1000)}:R>`,

@@ -90,20 +90,23 @@ export class User {
   }
 
   async can출첵() {
-    let result: [true] | [false, number]
+    const canTime = this.출첵coolTimeData[this.member.id]
+    const result: { can출첵: boolean; canTime: number } = {
+      can출첵: false,
+      canTime,
+    }
+
     if (this.member.id in this.출첵coolTimeData) {
       const d = new Date()
       d.setHours(d.getHours() + 9) // 시차 적용
-      if (this.출첵coolTimeData[this.member.id] <= d.getTime()) {
-        result = [true] // 시간이 지났으므로 가능
-      } else {
-        result = [false, this.출첵coolTimeData[this.member.id]]
+      if (canTime <= d.getTime()) {
+        result.can출첵 = true // 시간이 지났으므로 가능
       }
     } else {
-      result = [true] // 아직 실행한 적이 없으면 가능
+      result.can출첵 = true // 아직 실행한 적이 없으면 가능
     }
 
-    if (result[0]) {
+    if (result.can출첵) {
       // db 수정
       const d = new Date()
       d.setHours(d.getHours() + 9)
@@ -121,15 +124,18 @@ export class User {
   }
 
   async can공격(channelID: Snowflake) {
-    let result: [true] | [false, number]
+    const canTime = this.coolTimeData[channelID][this.member.id]
+    const result: { can공격: boolean; canTime: number } = {
+      can공격: false,
+      canTime,
+    }
+
     if (this.member.id in this.coolTimeData[channelID]) {
-      if (this.coolTimeData[channelID][this.member.id] <= new Date().getTime()) {
-        result = [true] // 시간이 지났으므로 가능
-      } else {
-        result = [false, this.coolTimeData[channelID][this.member.id]]
+      if (canTime <= new Date().getTime()) {
+        result.can공격 = true // 시간이 지났으므로 가능
       }
     } else {
-      result = [true] // 아직 실행한 적이 없으면 가능
+      result.can공격 = true // 아직 실행한 적이 없으면 가능
     }
 
     // db 수정
