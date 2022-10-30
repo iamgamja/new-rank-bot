@@ -5,6 +5,7 @@ import Data_Dungeon from '../data/Dungeon'
 import Data_CoolTime from '../data/cooltime'
 import { User } from '../class/User'
 import UserNotFoundError from '../class/error/UserNotFoundError'
+import getUser from '../functions/getUser'
 
 function makeCommandOption(name: string) {
   return {
@@ -20,74 +21,57 @@ function makeCommandFunc(cts: Client, name: string) {
   return async function resultFunc(i: CommandInteraction) {
     await i.deferReply()
 
-    try {
-      const member = i.member as GuildMember
-      const user = new User(cts, member)
-      await user._setup()
+    const member = i.member as GuildMember
+    const user = await getUser(cts, member)
+    if (!user) {
+      await i.editReply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```' })
+      return
+    }
 
-      const userData = user.userData
+    const userData = user.userData
 
-      const target = Data_Dungeon[name]
+    const target = Data_Dungeon[name]
 
-      if (i.channelId !== target.channelID) {
-        await i.editReply({ content: '```diff\n- 잘못된 채널입니다.\n```\n' + `실행 가능한 채널: <#${target.channelID}>` })
-        return
-      }
-      const coolTimeDB = await (cts.client.channels.cache.get('1025653116441464842') as TextChannel).messages.fetch('1028912965786796144')
-      const coolTimeData = JSON.parse(coolTimeDB.content)
-      let ispossible_cooltime: boolean
-      if (member.id in coolTimeData[target.channelID]) {
-        if (coolTimeData[target.channelID][member.user.id] <= new Date().getTime()) {
-          ispossible_cooltime = true // 시간이 지났으므로 가능
-        } else {
-          ispossible_cooltime = false
-        }
-      } else {
-        ispossible_cooltime = true // 아직 실행한 적이 없으면 가능
-      }
-      if (!ispossible_cooltime) {
-        await i.editReply({
-          content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(coolTimeData[target.channelID][member.user.id] / 1000)}:R>`,
-        })
-        return
-      }
+    if (i.channelId !== target.channelID) {
+      await i.editReply({ content: '```diff\n- 잘못된 채널입니다.\n```\n' + `실행 가능한 채널: <#${target.channelID}>` })
+      return
+    }
 
-      coolTimeData[target.channelID][member.user.id] = new Date().getTime() + Data_CoolTime[target.channelID] * 1000
-      await coolTimeDB.edit(JSON.stringify(coolTimeData))
+    const [can공격, canTime] = await user.can공격(target.channelID)
+    if (!can공격) {
+      await i.editReply({
+        content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(canTime! / 1000)}:R>`,
+      })
+      return
+    }
 
-      let ispossible_strong: boolean
-      if (target.공격력 === 0) {
-        ispossible_strong = true
-      } else {
-        ispossible_strong = Math.ceil(target.체력 / userData.공격력) >= Math.ceil(userData.체력 / target.공격력) ? false : true
-      }
+    let ispossible_strong: boolean
+    if (target.공격력 === 0) {
+      ispossible_strong = true
+    } else {
+      ispossible_strong = Math.ceil(target.체력 / userData.공격력) >= Math.ceil(userData.체력 / target.공격력) ? false : true
+    }
 
-      if (!ispossible_strong) {
-        await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
-        return
-      }
+    if (!ispossible_strong) {
+      await i.reply({ content: '```diff\n- 처치하지 못했습니다...\n```', ephemeral: true })
+      return
+    }
 
-      const items: string[] = []
-      // 아이템 획득
-      for (let itemName in target.드롭아이템) {
-        if (Math.random() < target.드롭아이템[itemName] / 100) {
-          items.push(itemName)
-        }
-      }
-
-      const items_str = items.map((s) => `+ ${s}`).join('\n')
-
-      await user.add('경험치', target.획득경험치)
-      await user.add('R', target.획득R)
-      await user.done()
-
-      await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
-    } catch (e) {
-      if (e instanceof UserNotFoundError) {
-        await i.editReply({ content: '```diff\n- 등록되지 않은 유저입니다.\n```' })
-        return
+    const items: string[] = []
+    // 아이템 획득
+    for (let itemName in target.드롭아이템) {
+      if (Math.random() < target.드롭아이템[itemName] / 100) {
+        items.push(itemName)
       }
     }
+
+    const items_str = items.map((s) => `+ ${s}`).join('\n')
+
+    await user.add('경험치', target.획득경험치)
+    await user.add('R', target.획득R)
+    await user.done()
+
+    await i.editReply({ content: '```diff\n처치했습니다.\n' + `+ EXP ${target.획득경험치}\n+ R ${target.획득R}\n${items_str}` + '```' })
   }
 }
 
