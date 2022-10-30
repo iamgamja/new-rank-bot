@@ -1,2 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-export const config = require('config.json')
+export const config = {
+  token: process.env.TOKEN,
+  slash: {
+    guild: '953302487065034785',
+  },
+}
