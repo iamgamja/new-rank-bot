@@ -5,9 +5,9 @@ import { Client } from '../structures/client'
 
 export default async function editUserInfoMsg(cts: Client, data: DBData) {
   const userInfoMsg = await (cts.client.channels.cache.get('1025347124294070282') as TextChannel).messages.fetch('1025975950439088168')
-  let r: string[] = []
+  const r: string[] = []
 
-  for (let userID in data) {
+  for (const userID in data) {
     const userData = data[userID]
 
     r.push(

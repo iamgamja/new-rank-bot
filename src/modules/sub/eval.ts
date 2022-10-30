@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 import { Module, applicationCommand, option } from '@pikokr/command.ts'
 import { Client } from '../../structures/client'
 import { CommandInteraction, GuildMember, TextChannel } from 'discord.js'
 import { DBData } from '../../../types/DBData'
-import calculateExp from '../../functions/calculateExp'
-import Data_Tears from '../../data/tears'
 import editUserInfoMsg from '../../functions/editUserInfoMsg'
 
 class Eval extends Module {

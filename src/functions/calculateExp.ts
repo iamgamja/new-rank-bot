@@ -9,14 +9,14 @@ export default function calculateExp(tear: number, level: number, exp: number) {
   }
   while (level > 1) {
     level -= 1
-    exp += 2 ** ((level)-1) * 1000
+    exp += 2 ** (level - 1) * 1000
   }
 
   if (exp < 0) return [0, 1, 0]
-  
+
   // 다시 3개의 숫자로 만들기
-  while (exp >= 2 ** ((level)-1) * 1000) {
-    exp -= 2 ** ((level)-1) * 1000
+  while (exp >= 2 ** (level - 1) * 1000) {
+    exp -= 2 ** (level - 1) * 1000
     level += 1
   }
   while (level > (tear + 1) * 5) {

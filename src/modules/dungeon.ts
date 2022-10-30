@@ -1,10 +1,7 @@
 import { Module, applicationCommand } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
-import { ApplicationCommandType, CommandInteraction, GuildMember, TextChannel } from 'discord.js'
+import { ApplicationCommandType, CommandInteraction, GuildMember } from 'discord.js'
 import Data_Dungeon from '../data/Dungeon'
-import Data_CoolTime from '../data/cooltime'
-import { User } from '../class/User'
-import UserNotFoundError from '../class/error/UserNotFoundError'
 import getUser from '../functions/getUser'
 
 function makeCommandOption(name: string) {
@@ -40,7 +37,7 @@ function makeCommandFunc(cts: Client, name: string) {
     const [can공격, canTime] = await user.can공격(target.channelID)
     if (!can공격) {
       await i.editReply({
-        content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(canTime! / 1000)}:R>`,
+        content: '```diff\n- 쿨타임을 기다려주세요.\n```\n' + `실행 가능한 시간: <t:${Math.floor(canTime / 1000)}:R>`,
       })
       return
     }
@@ -59,7 +56,7 @@ function makeCommandFunc(cts: Client, name: string) {
 
     const items: string[] = []
     // 아이템 획득
-    for (let itemName in target.드롭아이템) {
+    for (const itemName in target.드롭아이템) {
       if (Math.random() < target.드롭아이템[itemName] / 100) {
         items.push(itemName)
       }

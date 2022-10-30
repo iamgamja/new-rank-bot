@@ -90,7 +90,7 @@ export class User {
   }
 
   async can출첵() {
-    let result: [boolean, number?]
+    let result: [true] | [false, number]
     if (this.member.id in this.출첵coolTimeData) {
       const d = new Date()
       d.setHours(d.getHours() + 9) // 시차 적용
@@ -121,7 +121,7 @@ export class User {
   }
 
   async can공격(channelID: Snowflake) {
-    let result: [boolean, number?]
+    let result: [true] | [false, number]
     if (this.member.id in this.coolTimeData[channelID]) {
       if (this.coolTimeData[channelID][this.member.id] <= new Date().getTime()) {
         result = [true] // 시간이 지났으므로 가능

@@ -2,7 +2,6 @@ import { Module, applicationCommand, option } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
 import { CommandInteraction, GuildMember, TextChannel, GuildMemberRoleManager } from 'discord.js'
 import { DBData } from '../../types/DBData'
-import Data_Tears from '../data/tears'
 import editUserInfoMsg from '../functions/editUserInfoMsg'
 
 class 원격등록 extends Module {
@@ -27,7 +26,7 @@ class 원격등록 extends Module {
   })
   async 원격등록(i: CommandInteraction, @option('대상') 대상: GuildMember) {
     const roles = i.member?.roles
-    let isAdmin: boolean = false
+    let isAdmin = false
     if (roles instanceof GuildMemberRoleManager) {
       isAdmin = !!roles.cache.get('953309071468007494') // 관리자
     } else if (roles) {
