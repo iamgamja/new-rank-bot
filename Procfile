@@ -1,1 +1,1 @@
-worker: node ./setup.js && npm prod
+worker: node ./setup.js && yarn prod
