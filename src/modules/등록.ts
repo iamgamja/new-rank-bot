@@ -1,7 +1,7 @@
 import { Module, applicationCommand } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
 import { CommandInteraction, GuildMember, TextChannel } from 'discord.js'
-import { DBData } from '../types/DBData'
+import { DBData } from '../type/DBData'
 import editUserInfoMsg from '../functions/editUserInfoMsg'
 
 class 등록 extends Module {

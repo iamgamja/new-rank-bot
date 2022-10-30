@@ -1,7 +1,7 @@
 import { Module, applicationCommand, option } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
 import { CommandInteraction, GuildMember, TextChannel, GuildMemberRoleManager } from 'discord.js'
-import { DBData } from '../types/DBData'
+import { DBData } from '../type/DBData'
 import editUserInfoMsg from '../functions/editUserInfoMsg'
 
 class 원격등록 extends Module {

@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js'
-import { DBData } from '../types/DBData'
+import { DBData } from '../type/DBData'
 import Data_Tears from '../data/tears'
 import { Client } from '../structures/client'
 
