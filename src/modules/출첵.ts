@@ -1,8 +1,6 @@
 import { Module, applicationCommand } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
-import { CommandInteraction, GuildMember, TextChannel } from 'discord.js'
-import { User } from '../class/User'
-import UserNotFoundError from '../class/error/UserNotFoundError'
+import { CommandInteraction, GuildMember } from 'discord.js'
 import getUser from '../functions/getUser'
 
 class 출첵 extends Module {
