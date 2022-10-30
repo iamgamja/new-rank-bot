@@ -38,12 +38,14 @@ class 출첵 extends Module {
       return
     }
 
-    await user.add('경험치', 2 ** (user.누적레벨 - 1) * 10)
-    await user.add('R', 2 ** (user.누적레벨 - 1) * 10)
+    const n = 2 ** (user.누적레벨 - 1) * 10
+
+    await user.add('경험치', n)
+    await user.add('R', n)
     await user.done()
 
     await i.editReply({
-      content: '```diff\n출첵했습니다.\n+ EXP 50\n+ R 50\n```',
+      content: '```diff\n출첵했습니다.\n' + `+ EXP ${n}\n+ R ${n}\n` + '```',
     })
   }
 }
