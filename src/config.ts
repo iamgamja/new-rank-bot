@@ -1,5 +1,7 @@
+const TOKEN = process.env.TOKEN || require('../config.json').token
+
 export const config = {
-  token: process.env.TOKEN,
+  token: TOKEN,
   slash: {
     guild: '953302487065034785',
   },
