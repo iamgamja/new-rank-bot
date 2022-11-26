@@ -1,0 +1,1 @@
+{"version":3,"file":"UserNotFoundError.js","sourceRoot":"","sources":["../../../src/class/error/UserNotFoundError.ts"],"names":[],"mappings":";;AAEA,MAAqB,iBAAkB,SAAQ,KAAK;IAClD,YAAY,MAAmB;QAC7B,KAAK,CAAC,QAAQ,MAAM,CAAC,IAAI,CAAC,GAAG,iBAAiB,CAAC,CAAA;IACjD,CAAC;CACF;AAJD,oCAIC"}
