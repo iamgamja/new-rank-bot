@@ -50,7 +50,7 @@ function makeCommandFunc(cts: Client, name: '경험치' | '공격력' | '체력'
         `${대상.displayName}님 (ID: ${result.id.toString().padStart(6, '0')}) 의 현재 정보:\n` +
         '```\n' +
         `${Data_Tears[result.티어]} Lv. ${result.레벨} / EXP ${result.경험치}\n` +
-        `공격력: ${result.공격력} / HP: ${result.체력}\n` +
+        `공격력: ${result.공격력} / 체력: ${result.체력}\n` +
         `소지품:\n` +
         `  R ${result.R}\n` +
         `장착:\n` +
