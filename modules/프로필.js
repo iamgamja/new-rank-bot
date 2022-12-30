@@ -49,7 +49,7 @@ class 프로필 extends command_ts_1.Module {
                 content: `${member.displayName}님 (ID: ${userData.id.toString().padStart(6, '0')}) 의 정보:\n` +
                     '```\n' +
                     `${tears_1.default[userData.티어]} Lv. ${userData.레벨} / EXP ${userData.경험치} (다음 레벨까지 EXP ${남은경험치})\n` +
-                    `공격력: ${userData.공격력} / HP: ${userData.체력}\n` +
+                    `공격력: ${userData.공격력} / 체력: ${userData.체력}\n` +
                     `소지품:\n` +
                     `  R ${userData.R}\n` +
                     `장착:\n` +
