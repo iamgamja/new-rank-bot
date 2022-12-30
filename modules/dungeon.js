@@ -145,9 +145,9 @@ class Dungeon extends command_ts_1.Module {
         });
     }
     // 계절
-    ['가을슬라임'](i) {
+    ['겨울슬라임'](i) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield makeCommandFunc(this.cts, '가을슬라임')(i);
+            return yield makeCommandFunc(this.cts, '겨울슬라임')(i);
         });
     }
 }
@@ -218,11 +218,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], Dungeon.prototype, '퍼실의정령', null);
 __decorate([
-    (0, command_ts_1.applicationCommand)(makeCommandOption('가을슬라임')),
+    (0, command_ts_1.applicationCommand)(makeCommandOption('겨울슬라임')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [discord_js_1.CommandInteraction]),
     __metadata("design:returntype", Promise)
-], Dungeon.prototype, '가을슬라임', null);
+], Dungeon.prototype, '겨울슬라임', null);
 function install(cts) {
     return new Dungeon(cts);
 }
