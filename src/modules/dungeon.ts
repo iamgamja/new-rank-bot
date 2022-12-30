@@ -133,9 +133,9 @@ class Dungeon extends Module {
   }
 
   // 계절
-  @applicationCommand(makeCommandOption('가을슬라임'))
-  async ['가을슬라임'](i: CommandInteraction) {
-    return await makeCommandFunc(this.cts, '가을슬라임')(i)
+  @applicationCommand(makeCommandOption('겨울슬라임'))
+  async ['겨울슬라임'](i: CommandInteraction) {
+    return await makeCommandFunc(this.cts, '겨울슬라임')(i)
   }
 }
 
