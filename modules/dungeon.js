@@ -144,6 +144,21 @@ class Dungeon extends command_ts_1.Module {
             return yield makeCommandFunc(this.cts, '퍼실의정령')(i);
         });
     }
+    ['작은언덕의슬라임'](i) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield makeCommandFunc(this.cts, '작은언덕의슬라임')(i);
+        });
+    }
+    ['작은언덕정령'](i) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield makeCommandFunc(this.cts, '작은언덕정령')(i);
+        });
+    }
+    ['스톤슬라임'](i) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield makeCommandFunc(this.cts, '스톤슬라임')(i);
+        });
+    }
     // 계절
     ['겨울슬라임'](i) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -217,6 +232,24 @@ __decorate([
     __metadata("design:paramtypes", [discord_js_1.CommandInteraction]),
     __metadata("design:returntype", Promise)
 ], Dungeon.prototype, '퍼실의정령', null);
+__decorate([
+    (0, command_ts_1.applicationCommand)(makeCommandOption('작은언덕의슬라임')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [discord_js_1.CommandInteraction]),
+    __metadata("design:returntype", Promise)
+], Dungeon.prototype, '작은언덕의슬라임', null);
+__decorate([
+    (0, command_ts_1.applicationCommand)(makeCommandOption('작은언덕정령')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [discord_js_1.CommandInteraction]),
+    __metadata("design:returntype", Promise)
+], Dungeon.prototype, '작은언덕정령', null);
+__decorate([
+    (0, command_ts_1.applicationCommand)(makeCommandOption('스톤슬라임')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [discord_js_1.CommandInteraction]),
+    __metadata("design:returntype", Promise)
+], Dungeon.prototype, '스톤슬라임', null);
 __decorate([
     (0, command_ts_1.applicationCommand)(makeCommandOption('겨울슬라임')),
     __metadata("design:type", Function),
